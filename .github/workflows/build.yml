@@ -8,7 +8,7 @@ defaults:
     shell: pwsh
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
       - name: Descompactar o zip do projeto
@@ -19,7 +19,7 @@ jobs:
           $cm = Get-ChildItem -Path src -Recurse -Filter CMakeLists.txt | Select-Object -First 1
           "SRC=$($cm.DirectoryName)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
       - name: Configurar (CMake baixa o JUCE)
-        run: cmake -S "$env:SRC" -B "$env:SRC/build" -G "Visual Studio 17 2022" -A x64
+        run: cmake -S "$env:SRC" -B "$env:SRC/build" -A x64
       - name: Compilar
         run: cmake --build "$env:SRC/build" --config Release --parallel
       - name: Reunir arquivos
